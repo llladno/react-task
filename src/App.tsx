@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import Store from "./store/store";
+import {observer} from "mobx-react-lite";
+import axios from "axios";
+import {toJS} from "mobx";
+import {Product} from "./types";
+import Basket from "./components/Basket";
+import Card from "./components/Card";
 
-function App() {
+
+
+const  App = observer(() => {
+    const [products, setProducts] = useState<Product[]>([])
+    useEffect(() => {
+        getProducts()
+    },[])
+
+    async function getProducts(){
+        const result = await axios.get('https://fakestoreapi.com/products')
+        setProducts(result.data)
+    }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <div className='products'>
+            {products.map((product: Product) => (
+                <Card key={product.id} product={product}></Card>
+            ))}
+        </div>
+        <Basket></Basket>
     </div>
+
   );
-}
+})
 
 export default App;
