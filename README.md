@@ -18,6 +18,8 @@
 
 ### `npm start`
 
+** В приложении используется React, TypeScirpt, Mobx и axios
+
 ## Использование
 
 Теперь можно перейти по адресу: [http://localhost:3000/](http://localhost:3000/)
